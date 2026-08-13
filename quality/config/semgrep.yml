@@ -1,0 +1,19 @@
+rules:
+  - id: python.lang.security.audit.formatted-sql-query
+    languages: [python]
+    message: Use parameterized queries instead of string-formatted SQL.
+    severity: ERROR
+    pattern-either:
+      - pattern: text("..." + ...)
+      - pattern: text(f"...")
+  - id: python.lang.security.audit.hardcoded-password
+    languages: [python]
+    message: Avoid hardcoded credentials.
+    severity: WARNING
+    patterns:
+      - pattern: password = "..."
+  - id: python.lang.security.audit.eval-detected
+    languages: [python]
+    message: eval() is unsafe
+    severity: ERROR
+    pattern: eval(...)

@@ -1,0 +1,12 @@
+-r requirements.txt
+pytest==8.3.4
+pytest-cov==6.0.0
+coverage==7.6.9
+pylint==3.3.2
+flake8==7.1.1
+bandit==1.8.0
+radon==6.0.1
+pip-audit==2.7.3
+mutmut==2.4.5
+mccabe==0.7.0
+pyflakes==3.2.0

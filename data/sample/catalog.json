@@ -1,0 +1,10 @@
+{
+  "customers": [
+    {"email": "retail.buyer@example.com", "full_name": "Priya Shah", "tier": "gold", "region": "US"},
+    {"email": "cafe.owner@example.com", "full_name": "Noah Cole", "tier": "silver", "region": "UK"}
+  ],
+  "products": [
+    {"sku": "MUG-ATL-1", "name": "Stoneware Mug", "unit_price_cents": 1400, "weight_grams": 380, "initial_on_hand": 80},
+    {"sku": "TEA-ASSAM", "name": "Assam Tea 100g", "unit_price_cents": 850, "weight_grams": 120, "initial_on_hand": 80}
+  ]
+}

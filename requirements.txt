@@ -1,0 +1,24 @@
+# Runtime — pinned for pip-audit / SCA reproducibility.
+# Compatible with Python 3.10, 3.11, 3.12, and 3.13 (Testable matrix).
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+sqlalchemy==2.0.36
+pydantic==2.10.3
+pydantic-settings==2.6.1
+httpx==0.28.1
+starlette==0.41.3
+anyio==4.7.0
+idna==3.10
+sniffio==1.3.1
+certifi==2024.12.14
+click==8.1.8
+h11==0.14.0
+httptools==0.6.4
+python-dotenv==1.0.1
+PyYAML==6.0.2
+typing_extensions==4.12.2
+annotated-types==0.7.0
+pydantic_core==2.27.1
+watchfiles==1.0.3
+websockets==14.1
+colorama==0.4.6

@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Test / coverage
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+coverage.xml
+coverage.json
+lcov.info
+.mutmut-cache
+.mutmut-cache/
+xdist-stats.json
+.hypothesis/
+
+# Quality reports (generated)
+quality/reports/**
+!quality/reports/.gitkeep
+!quality/reports/**/.gitkeep
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+data/runtime/
+
+# IDE / OS
+.idea/
+.vscode/
+*.log
+.DS_Store
+Thumbs.db
+
+# Tool caches
+.bandit
+.pylint.d/
+.crosshair/
+.testmondata
+.testmondata*
+bandit.json
+pylint.json
+flake8.txt
