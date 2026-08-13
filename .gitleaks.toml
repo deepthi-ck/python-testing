@@ -1,0 +1,7 @@
+title = "Orderflow secret scan allowlist"
+[allowlist]
+description = "No production secrets are stored in this repository"
+paths = [
+  '''(.*?)(docs/|quality/reports/)''',
+]
+regexes = []

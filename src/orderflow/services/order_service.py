@@ -16,6 +16,7 @@ from orderflow.services.fulfillment_service import FulfillmentService, IllegalTr
 from orderflow.services.inventory_service import InsufficientStockError, InventoryService
 from orderflow.services.payment_service import PaymentError, PaymentService
 from orderflow.services.pricing_service import PricingService
+from orderflow.utils.logging import info as log_info
 from orderflow.validators.input_sanitizer import (
     InputValidationError,
     require_quantity,
@@ -97,16 +98,19 @@ class OrderService:
 
         promo = sanitize_promo_code(payload.promo_code)
         notes = sanitize_text(payload.notes, "notes")
+        skus = [line.sku for line in payload.lines]
+        product_map = {
+            product.sku: product
+            for product in self._products.list_by_skus(skus)
+            if product.is_active
+        }
         priced_lines: list[tuple[str, int, int, int]] = []
         reserve_items: list[tuple[str, int]] = []
-        product_map: dict[str, Product] = {}
-
         for line in payload.lines:
             quantity = require_quantity(line.quantity)
-            product = self._products.get_by_sku(line.sku)
-            if product is None or not product.is_active:
+            product = product_map.get(line.sku)
+            if product is None:
                 raise InputValidationError(f"unknown sku {line.sku}")
-            product_map[product.sku] = product
             priced_lines.append((product.sku, quantity, product.unit_price_cents, product.weight_grams))
             reserve_items.append((product.sku, quantity))
 
@@ -141,7 +145,9 @@ class OrderService:
                     line_total_cents=quoted.line_total_cents,
                 )
             )
-        return self._orders.add(order)
+        saved = self._orders.add(order)
+        log_info("order_created", order_id=saved.id, line_count=len(saved.lines))
+        return saved
 
     def get_order(self, order_id: int) -> Order:
         order = self._orders.get(order_id)

@@ -11,6 +11,12 @@ def expected_api_key_hash() -> str:
 
 
 def authenticate_request(x_api_key: str | None = Header(default=None, alias="X-API-Key")) -> str:
-    if not x_api_key or not secrets_match(x_api_key, expected_api_key_hash()):
+    expected = get_settings().api_key
+    if not expected:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="api key is not configured",
+        )
+    if not x_api_key or not secrets_match(x_api_key, hash_secret(expected)):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid api key")
     return x_api_key

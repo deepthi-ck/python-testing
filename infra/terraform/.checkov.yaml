@@ -1,0 +1,6 @@
+compact: true
+framework:
+  - terraform
+directory: infra/terraform
+download-external-modules: false
+skip-check: []

@@ -1,0 +1,15 @@
+services:
+  api:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      ORDERFLOW_ENVIRONMENT: production
+      ORDERFLOW_DATABASE_URL: sqlite:////app/data/runtime/orderflow.db
+      ORDERFLOW_API_KEY: ${ORDERFLOW_API_KEY}
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /app/data/runtime
+    security_opt:
+      - no-new-privileges:true

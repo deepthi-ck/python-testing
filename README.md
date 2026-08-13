@@ -21,12 +21,16 @@ python-testing/
 │   ├── security/           Hashed API keys, access checks
 │   ├── analysis/           Risk, control-flow, definition-use helpers
 │   └── utils/              Money, hashing, dates
+├── infra/terraform/        CIS-aligned AWS IaC (Checkov/tfsec)
+├── Dockerfile              Non-root production image
 ├── tests/unit|integration|functional
 ├── scripts/                Seed, quality runner, git churn
 ├── quality/config|reports  Tool configs and generated evidence
-├── docs/                   Metric, tool, and version traceability
+├── docs/                   Metric, tool, version, and gate traceability
 └── .github/workflows/ci.yml
 ```
+
+Confidence Engine gate mapping (Performance, Security, IaC, SOC 2, secrets): [docs/gate-coverage.md](docs/gate-coverage.md).
 
 ## Supported Python versions
 
@@ -59,14 +63,11 @@ python -m orderflow.main
 - OpenAPI: http://127.0.0.1:8000/openapi.json
 - Health: http://127.0.0.1:8000/health
 
-Default API key (override with `ORDERFLOW_API_KEY`):
-
-```text
-X-API-Key: dev-local-key-not-for-production
-```
+Set the API key in the environment (nothing is hardcoded in source):
 
 ```bash
-curl -H "X-API-Key: dev-local-key-not-for-production" http://127.0.0.1:8000/health
+set ORDERFLOW_API_KEY=your-local-key
+curl -H "X-API-Key: your-local-key" http://127.0.0.1:8000/customers
 ```
 
 ## Run tests
@@ -151,7 +152,7 @@ Full table: [docs/metric-coverage.md](docs/metric-coverage.md).
 | Variable | Default | Purpose |
 |---|---|---|
 | `ORDERFLOW_DATABASE_URL` | `sqlite:///./data/runtime/orderflow.db` | SQLAlchemy URL |
-| `ORDERFLOW_API_KEY` | `dev-local-key-not-for-production` | API authentication |
+| `ORDERFLOW_API_KEY` | _(empty — required for mutating routes)_ | API authentication |
 | `ORDERFLOW_ENVIRONMENT` | `development` | Runtime label |
 | `ORDERFLOW_ENABLE_SQL_TRIGGERS` | `true` | Install audit triggers |
 
@@ -160,4 +161,4 @@ Full table: [docs/metric-coverage.md](docs/metric-coverage.md).
 - Black-box Excel rows that require a browser (visual regression, WCAG, keyboard navigation) are not applicable to this API service. API functional, boundary, and OpenAPI contract rows **are** covered.
 - Forward-looking CPython 3.14–3.16 matrix rows are documented, not CI-executed.
 - Optional tools (Crosshair, Pymcdc, complexipy, cosmic-ray, jscpd CLI) should be installed in the Testable runner; they are not required to start the API.
-- Default API key is for local/dev analysis only. Set `ORDERFLOW_API_KEY` in any shared environment.
+- Set `ORDERFLOW_API_KEY` before serving. The application does not ship a default secret.

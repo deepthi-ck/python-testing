@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, UniqueConstraint, func
+from sqlalchemy import DateTime, ForeignKey, Index, Integer, String, UniqueConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from orderflow.database import Base
@@ -10,7 +10,10 @@ from orderflow.database import Base
 
 class InventoryLot(Base):
     __tablename__ = "inventory_lots"
-    __table_args__ = (UniqueConstraint("sku", "warehouse", name="uq_inventory_sku_warehouse"),)
+    __table_args__ = (
+        UniqueConstraint("sku", "warehouse", name="uq_inventory_sku_warehouse"),
+        Index("ix_inventory_sku", "sku"),
+    )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     product_id: Mapped[int] = mapped_column(ForeignKey("products.id"), nullable=False)

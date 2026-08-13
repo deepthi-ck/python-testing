@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     app_name: str = "Orderflow Fulfillment"
     environment: str = "development"
     database_url: str = "sqlite:///./data/runtime/orderflow.db"
-    api_key: str = Field(default="dev-local-key-not-for-production")
+    api_key: str = Field(default="")
     api_key_header: str = "X-API-Key"
     max_line_items: int = 50
     max_quantity: int = 10_000

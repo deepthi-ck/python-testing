@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, func
+from sqlalchemy import DateTime, ForeignKey, Index, Integer, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from orderflow.database import Base
@@ -40,12 +40,17 @@ class Order(Base):
     customer = relationship("Customer", back_populates="orders")
     lines = relationship("OrderLine", back_populates="order", cascade="all, delete-orphan")
 
+    __table_args__ = (
+        Index("ix_orders_customer_id", "customer_id"),
+        Index("ix_orders_status", "status"),
+    )
+
 
 class OrderLine(Base):
     __tablename__ = "order_lines"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id"), nullable=False)
+    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id"), nullable=False, index=True)
     product_id: Mapped[int] = mapped_column(ForeignKey("products.id"), nullable=False)
     sku: Mapped[str] = mapped_column(String(40), nullable=False)
     quantity: Mapped[int] = mapped_column(Integer, nullable=False)

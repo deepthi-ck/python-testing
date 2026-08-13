@@ -25,3 +25,9 @@ class ProductRepository:
     def list_active(self, limit: int = 100) -> list[Product]:
         statement = select(Product).where(Product.is_active.is_(True)).limit(limit)
         return list(self._session.scalars(statement))
+
+    def list_by_skus(self, skus: list[str]) -> list[Product]:
+        if not skus:
+            return []
+        statement = select(Product).where(Product.sku.in_(skus))
+        return list(self._session.scalars(statement))

@@ -39,6 +39,11 @@ quality/reports/**
 *.sqlite3
 data/runtime/
 
+# Secrets
+.env
+.env.*
+!.env.example
+
 # IDE / OS
 .idea/
 .vscode/

@@ -24,9 +24,10 @@ class InventoryService:
     def reserve(self, items: list[tuple[str, int]], warehouse: str = "ATL") -> list[Reservation]:
         if not items:
             raise ValueError("nothing to reserve")
+        lots = self._lots_for(items, warehouse)
         reservations: list[Reservation] = []
         for sku, quantity in items:
-            lot = self._require_lot(sku, warehouse)
+            lot = lots[sku]
             available = lot.on_hand - lot.reserved
             if available < quantity:
                 raise InsufficientStockError(f"insufficient stock for {sku}")
@@ -35,13 +36,15 @@ class InventoryService:
         return reservations
 
     def release(self, items: list[tuple[str, int]], warehouse: str = "ATL") -> None:
+        lots = self._lots_for(items, warehouse)
         for sku, quantity in items:
-            lot = self._require_lot(sku, warehouse)
+            lot = lots[sku]
             lot.reserved = max(lot.reserved - quantity, 0)
 
     def ship(self, items: list[tuple[str, int]], warehouse: str = "ATL") -> None:
+        lots = self._lots_for(items, warehouse)
         for sku, quantity in items:
-            lot = self._require_lot(sku, warehouse)
+            lot = lots[sku]
             if lot.reserved < quantity or lot.on_hand < quantity:
                 raise InsufficientStockError(f"cannot ship {sku}")
             lot.reserved -= quantity
@@ -59,6 +62,18 @@ class InventoryService:
         if lot is None:
             return 0
         return max(lot.on_hand - lot.reserved, 0)
+
+    def _lots_for(self, items: list[tuple[str, int]], warehouse: str) -> dict[str, InventoryLot]:
+        skus = [sku for sku, _quantity in items]
+        found = {
+            lot.sku: lot
+            for lot in self._repository.list_for_skus(skus)
+            if lot.warehouse == warehouse
+        }
+        missing = [sku for sku in skus if sku not in found]
+        if missing:
+            raise InsufficientStockError(f"unknown sku {missing[0]}")
+        return found
 
     def _require_lot(self, sku: str, warehouse: str) -> InventoryLot:
         lot = self._repository.get_by_sku(sku, warehouse)
