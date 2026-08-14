@@ -4,9 +4,12 @@
   "projectType": "FastAPI Application",
   "scenario": "1 - Monolithic",
   "module": "flat (single module)",
-  "customerVersion": "3.12",
-  "branchName": "master",
-  "mvpDomains": ["EdTech", "Retail"],
+  "customerVersion": "3.10",
+  "branchName": "Python_3.10",
+  "mvpDomains": [
+    "EdTech",
+    "Retail"
+  ],
   "requiresPythonBuiltins": true,
   "metricCount": 103,
   "versionRepo": "https://github.com/deepthi-ck/python-testing",
