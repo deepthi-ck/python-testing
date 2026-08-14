@@ -34,7 +34,11 @@ Confidence Engine gate mapping (Performance, Security, IaC, SOC 2, secrets): [do
 
 ## Supported Python versions
 
-Install and analyse on **3.10, 3.11, 3.12** (CI). The package also classifies **3.13**. Syntax stays on 3.10 so older matrix rows still parse. See [docs/version-compatibility.md](docs/version-compatibility.md).
+Customer-version branches (same application files; `version.json` identifies the version):
+
+`Python_2.6`, `Python_2.7`, `Python_3.4`, `Python_3.5`, `Python_3.6`, `Python_3.7`, `Python_3.8`, `Python_3.9`, `Python_3.10`, `Python_3.11`, `Python_3.12`, `Python_3.13`, `Python_3.14`, `Python_3.15`, `Python_3.16`
+
+CI executes the FastAPI suite on **3.10, 3.11, 3.12**. Every listed customer version is registered in `version.json` and has a git branch. See [docs/version-compatibility.md](docs/version-compatibility.md).
 
 ## Setup
 
@@ -116,7 +120,7 @@ On startup the app creates SQLite triggers (`trg_orders_after_insert`, `trg_orde
 
 1. Push this repository to GitHub (keep the default branch, typically `main` or `master`).
 2. In Testable, link the GitHub repo (Code → Linked). Link the work item/story as well so Story is not “Not Linked”.
-3. Select language **Python** and a supported version (**3.10–3.13**).
+3. Select language **Python** and a customer version branch (`Python_2.6` … `Python_3.16`).
 4. Point the quality tools at `src/orderflow` (not `.venv`). Enable Coverage.py / pytest-cov, pylint or flake8, Bandit/Semgrep, pip-audit, radon/lizard, jscpd, mutmut/cosmic-ray, and git churn as configured in your org.
 5. Execute a Confidence Engine run on the commit you just pushed.
 

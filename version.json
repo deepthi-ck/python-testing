@@ -1,0 +1,34 @@
+{
+  "language": "Python",
+  "priority": 1,
+  "projectType": "FastAPI Application",
+  "scenario": "1 - Monolithic",
+  "module": "flat (single module)",
+  "customerVersion": "3.12",
+  "branchName": "master",
+  "mvpDomains": ["EdTech", "Retail"],
+  "requiresPythonBuiltins": true,
+  "metricCount": 103,
+  "versionRepo": "https://github.com/deepthi-ck/python-testing",
+  "supportedCustomerVersions": [
+    "2.6",
+    "2.7",
+    "3.4",
+    "3.5",
+    "3.6",
+    "3.7",
+    "3.8",
+    "3.9",
+    "3.10",
+    "3.11",
+    "3.12",
+    "3.13",
+    "3.14",
+    "3.15",
+    "3.16"
+  ],
+  "sourceWorkbooks": [
+    "Testable_Strategy_Metrics_Mapping_v0.2.xlsx",
+    "Testable_Language_Version_Matrix_Verbatim_Fixed.xlsx"
+  ]
+}

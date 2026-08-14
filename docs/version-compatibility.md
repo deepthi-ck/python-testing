@@ -2,6 +2,30 @@
 
 Source: `Testable_Language_Version_Matrix_Verbatim_Fixed.xlsx` → sheet **Tool Matrix by Language** → Python columns (Tool, Supported Version).
 
+## Customer-version branches (all 15)
+
+Source: `Testable_Language_Version_Matrix_Verbatim_Fixed.xlsx` + [deepthi-ck/python-testing](https://github.com/deepthi-ck/python-testing).
+
+| Branch | Customer Version |
+|---|---|
+| Python_2.6 | 2.6 |
+| Python_2.7 | 2.7 |
+| Python_3.4 | 3.4 |
+| Python_3.5 | 3.5 |
+| Python_3.6 | 3.6 |
+| Python_3.7 | 3.7 |
+| Python_3.8 | 3.8 |
+| Python_3.9 | 3.9 |
+| Python_3.10 | 3.10 |
+| Python_3.11 | 3.11 |
+| Python_3.12 | 3.12 |
+| Python_3.13 | 3.13 |
+| Python_3.14 | 3.14 |
+| Python_3.15 | 3.15 |
+| Python_3.16 | 3.16 |
+
+Each branch contains the same Orderflow sources. Only `version.json` `customerVersion` / `branchName` change.
+
 ## Runtime this repository targets
 
 | Constraint | Value |
